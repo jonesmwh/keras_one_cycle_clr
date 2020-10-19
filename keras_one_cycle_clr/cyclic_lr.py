@@ -28,13 +28,13 @@ class CLR(keras.callbacks.Callback):
             cyc,
             lr_range,
             momentum_range,
+            no_samples,
+            batch_size=None,
             phase_one_fraction=0.3,
             amplitude_fn=None,
             reset_on_train_begin=True,
             record_frq=10,
-            verbose=False,
-            batch_size,
-            no_samples):
+            verbose=False):
 
         super(CLR, self).__init__()
 
