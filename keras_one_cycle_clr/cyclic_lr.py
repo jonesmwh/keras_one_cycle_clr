@@ -32,7 +32,9 @@ class CLR(keras.callbacks.Callback):
             amplitude_fn=None,
             reset_on_train_begin=True,
             record_frq=10,
-            verbose=False):
+            verbose=False,
+            batch_size,
+            no_samples):
 
         super(CLR, self).__init__()
 
@@ -119,10 +121,10 @@ class CLR(keras.callbacks.Callback):
 
         # find number of batches per epoch
         ## TODO - add batch size parameter
-#         if self.params['batch_size'] is not None:  # model.fit
-#             self.n_bpe = int(np.ceil(self.params['samples'] / self.params['batch_size']))
-#         if self.params['batch_size'] is None:  # model.fit_generator
-        self.n_bpe = self.params['samples']
+        if batch_size is not None:  # model.fit
+            self.n_bpe = int(np.ceil(no_samples / batch_size))
+        if batch_size is None:  # model.fit_generator
+            self.n_bpe = no_samples
 
         self.n_iter = self.n_epoch * self.n_bpe
         # this is a number of iteration in one cycle
