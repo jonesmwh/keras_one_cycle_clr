@@ -42,6 +42,8 @@ class CLR(keras.callbacks.Callback):
         self.lr_range = lr_range
         self.momentum_range = momentum_range
         self.phase_one_fraction = phase_one_fraction
+        self.batch_size = batch_size
+        self.no_samples = no_samples
 
         if amplitude_fn is None:
             amplitude_fn = lambda x: 1.0
@@ -121,10 +123,10 @@ class CLR(keras.callbacks.Callback):
 
         # find number of batches per epoch
         ## TODO - add batch size parameter
-        if batch_size is not None:  # model.fit
-            self.n_bpe = int(np.ceil(no_samples / batch_size))
-        if batch_size is None:  # model.fit_generator
-            self.n_bpe = no_samples
+        if self.batch_size is not None:  # model.fit
+            self.n_bpe = int(np.ceil(self.no_samples / self.batch_size))
+        if self.batch_size is None:  # model.fit_generator
+            self.n_bpe = self.no_samples
 
         self.n_iter = self.n_epoch * self.n_bpe
         # this is a number of iteration in one cycle
